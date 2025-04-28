@@ -1,0 +1,58 @@
+CREATE OR REPLACE DATABASE my_cortex_demo;
+CREATE OR REPLACE WAREHOUSE my_wh WITH WAREHOUSE_SIZE = 'XSMALL' AUTO_SUSPEND=60 AUTO_RESUME=TRUE;
+USE DATABASE my_cortex_demo;
+USE WAREHOUSE my_wh;
+
+
+CREATE OR REPLACE TABLE SALES (
+  REGION STRING,
+  SALES_AMOUNT FLOAT,
+  SALE_DATE DATE
+);
+
+INSERT INTO SALES VALUES
+  ('North',12000,'2024-01-15'),
+  ('South',18000,'2024-02-10'),
+  ('East', 9000,'2024-03-05'),
+  ('North',15000,'2024-04-12');
+
+
+SET prompt = 'What were total sales in Q1 2024?';
+
+SELECT SNOWFLAKE.CORTEX.COMPLETE(
+  'llama3-8b',  
+  CONCAT(
+    'Context URL: https://snowflake-cortex-schemas.s3.us-east-1.amazonaws.com/schema.yaml',
+    'Instruction: Write a SQL query to calculate total SALES_AMOUNT from the SALES table 
+   where SALE_DATE is between 2024-01-01 and 2024-03-31.'
+  )
+) AS generated_sql;
+
+
+SELECT SUM(SALES_AMOUNT) AS TOTAL_SALES
+FROM SALES
+WHERE SALE_DATE BETWEEN '2024-01-01' AND '2024-03-31';
+
+
+SELECT SNOWFLAKE.CORTEX.SUMMARIZE(
+  'Total sales in Q1 2024 were $44250.'
+) AS summary;
+
+
+
+SHOW TABLES IN SCHEMA public;
+
+SHOW USERS;
+
+SHOW GRANTS TO USER RADHIKA;
+CREATE ROLE SALES_ROLE;
+GRANT SELECT ON TABLE public.SALES TO ROLE SALES_ROLE;
+GRANT ROLE SALES_ROLE TO USER "RADHIKA";
+
+
+
+
+
+  
+
+  

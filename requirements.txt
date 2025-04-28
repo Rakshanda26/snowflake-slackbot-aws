@@ -1,0 +1,9 @@
+snowflake-connector-python
+slack-sdk
+Flask==2.1.0
+werkzeug==2.1.0
+requests
+tomlkit==0.11.8
+flask-ngrok
+
+

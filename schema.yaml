@@ -1,0 +1,13 @@
+tables:
+  - name: SALES
+    description: Sales data by region and date
+    columns:
+      - name: REGION
+        type: VARCHAR
+        description: Sales region
+      - name: SALES_AMOUNT
+        type: FLOAT
+        description: Amount of sales in dollars
+      - name: SALE_DATE
+        type: DATE
+        description: Date of sale
