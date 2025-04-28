@@ -6,11 +6,11 @@ app = Flask(__name__)
 
 # Snowflake connection setup
 sf_connection = snowflake.connector.connect(
-    user="RADHIKA",
-    password="Radhamadhav@55",
-    account="JLZHQNI-HWB51415",
-    warehouse='my_wh',
-    database='my_cortex_demo',
+    user="",
+    password="",
+    account="",
+    warehouse='',
+    database='',
     schema='public'
 )
 
